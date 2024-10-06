@@ -1,0 +1,487 @@
+*,
+*::after,
+*:before {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+:root {
+  --pink-body: #f4978e;
+  --pink-container: #f8ad9d;
+  --pink-button: #f87070;
+  --pink-hover: #f08080;
+  --task-button: #b41e25;
+  --active: #ee6983;
+  --add-task: #259625;
+  --white: #f5f5f5;
+  --progress-color: #fff;
+  --start: #399918;
+  --pause: #e84545;
+}
+/*Default theme*/
+[data-theme="default"] {
+  --pink-body: #f4978e;
+  --pink-container: #f8ad9d;
+  --pink-button: #ffc5c5;
+  --pink-hover: #e97777;
+  --active: #ee6983;
+}
+[data-theme="blue"] {
+  --pink-body: #3d6a9f;
+  --pink-container: #779ecb;
+  --pink-button: #5284bd;
+  --pink-hover: #2f527a;
+  --active: #0a2647;
+
+}
+[data-theme="green"] {
+  --pink-body: #658147;
+  --pink-container: #729762;
+  --pink-button: #75a47f;
+  --pink-hover: #597445;
+  --active: #285430;
+}
+[data-theme="orange"] {
+  --pink-body: #f9b572;
+  --pink-container: #ffcf81;
+  --pink-button: #ffbe98;
+  --pink-hover: #f6995c;
+  --active: #f07b3f;
+}
+body * {
+  font-family: "Roboto", sans-serif;
+}
+body {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--pink-body);
+}
+h1, #pomodoroCountDisplay{
+  color: #fff;
+}
+.container {
+  display: flex;
+  flex-direction: row;
+  background-color: var(--pink-container);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  border-radius: 10px;
+  padding: 20px 10px;
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+.card-header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+.card-header h1 {
+  font-weight: 900;
+  font-size: 35px;
+}
+.card-header-buttons {
+  display: flex;
+  justify-content: stretch;
+  gap: 25px;
+}
+.card-header-buttons button {
+  background-color: var(--pink-hover);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+}
+.card-header-buttons button:hover {
+  background-color: var(--active);
+}
+.card-header-buttons .active {
+  background-color: var(--active);
+}
+.card-body {
+  display: flex;
+  flex-direction: center;
+  align-items: center;
+  padding: 30px;
+}
+.progress-bar {
+  position: relative;
+  height: 280px;
+  width: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: conic-gradient(var(--white) 0deg, var(--pink-hover) 0deg);
+  border-radius: 50%;
+  transition: background-color 0.5s ease-in-out;
+}
+.progress-bar-inner {
+  position: absolute;
+  width: 95%;
+  height: 95%;
+  background-color: var(--pink-body);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.progress-bar-inner h2 {
+  font-weight: 900;
+  font-size: 60px;
+  color: var(--white);
+}
+.card-footer {
+  display: flex;
+  justify-content: stretch;
+  gap: 50px;
+  padding: auto;
+}
+.card-footer button {
+  border-radius: 5px;
+  padding: 10px 20px;
+  width: 100px;
+  height: 50px;
+  cursor: pointer;
+  background-color: var(--start);
+  color: white;
+  font-weight: 600;
+  font-size: 20px;
+  transition: background-color 0.4s ease, transform 0.1s ease;
+}
+
+#restartButton {
+  background-color: #f5d061;
+}
+
+/* Settings icon in top-right corner */
+.settings-icon {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 24px;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.settings-icon:hover {
+  color: #ff6347; /* Change icon color on hover */
+  transform: rotate(90deg); /* Rotate the icon on hover */
+}
+
+/* The Modal (background) */
+.modal {
+  display: none;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+.modal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #dedede;
+  background-color: var(--pink-hover);
+  padding: 15px;
+  color: white;
+}
+#model-header h2 {
+  margin: 0;
+}
+
+/* Modal Content */
+.modal-content {
+  width: 300px;
+  background-color: whitesmoke;
+  position: relative;
+  left: 50%;
+  top: 100px;
+  transform: translateX(-50%);
+  border-radius: 5px;
+  font-family: "Roboto", sans-serif;
+  overflow: hidden;
+}
+.modal-inner {
+  padding: 20px;
+}
+
+/* Animation for modal */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Close Button */
+.close {
+  color: #fff;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black; /* Color change on hover */
+  text-decoration: none;
+  cursor: pointer;
+}
+.modal-footer {
+  padding: 20px;
+  justify-content: space-between;
+}
+
+#saveSettingsBtn {
+  background-color: var(--pink-hover);
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px; /* Rounded button */
+  transition: background-color 0.3s ease;
+}
+
+#defaultSettingsBtn {
+  background-color: var(--pink-hover);
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px; /* Rounded button */
+  transition: background-color 0.3s ease;
+}
+
+#saveSettingsBtn:hover {
+  background-color: var(--pink-button);
+}
+
+#defaultSettingsBtn:hover {
+  background-color: var(--pink-button);
+}
+
+.time-group label {
+  display: block; /* Để label nằm trên input */
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+.time-group input {
+  width: 100%; /* Chiều rộng input */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box; /* Đảm bảo padding không làm tăng chiều rộng */
+}
+/* Theme options */
+.theme-options {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+/*
+body.dark{
+    background-color: #750000;
+} */
+
+/* Blue Theme */
+/*
+body.blue{
+    background-color: var(--blue);
+}*/
+
+body {
+  transition: background-color 0.3s ease;
+}
+
+#taskSection {
+  margin-top: 0cap; /* Thay đổi khoảng cách từ trên xuống */
+  margin-left: 50px;
+}
+
+/* Tiêu đề */
+#taskSection h2 {
+  margin: 0;
+  margin-bottom: 15px;
+  text-align: center;
+  color: #ffffff;
+  font-size: 30px;
+}
+
+/* Ô nhập task */
+#taskInput {
+  width: 500;
+  padding: 15px;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-bottom: 10px;
+  outline: none;
+}
+
+/* Nút Add Task */
+#addTaskButton {
+  padding: 15px;
+  background-color: var(--add-task);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 15px;
+}
+
+#addTaskButton:hover {
+  background-color: var(--pink-hover);
+}
+
+#deleteAllButton {
+  width: 30%;
+  padding: 5px;
+  background-color: var(--task-button);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 15px;
+}
+
+/* Danh sách task */
+#taskSection {
+    max-height: 600px; /* Điều chỉnh chiều cao tối đa cho danh sách */
+    overflow-y: auto;  /* Cho phép cuộn dọc khi danh sách vượt quá chiều cao */
+    margin-top: 0;
+    padding: 10px;
+    list-style-type: none;
+}
+.task-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10px 0;
+  padding: 4px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  position: relative; /* Để menu tùy chọn nằm trong giới hạn của task */
+}
+
+.task-options {
+  cursor: pointer;
+  padding: 5px;
+  border: none;
+  background: none;
+  font-size: 1.5rem;
+}
+
+.task-options-menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  z-index: 1;
+}
+
+.task-options-menu button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.task-options-menu button:hover {
+  background-color: #f0f0f0;
+}
+
+.edit-task-input {
+  width: 200px; /* Điều chỉnh độ rộng theo nhu cầu */
+  padding: 5px; /* Thêm một chút padding cho đẹp */
+  margin-left: 5px; /* Thêm khoảng cách bên trái */
+}
+
+#tomato-container {
+  position: absolute;
+  width: 250px; /* Đặt kích thước phù hợp cho quả cà chua */
+  height: 250px;
+  top: 55%;
+  left: 55%;
+  cursor: grab; /*thay đổi hình chuột thành bàn tay*/
+  z-index: 10;
+}
+
+#tomato {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.eye {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  background: white;
+  border-radius: 50%;
+  top: 42%;
+  left: 50%;
+  right: 50%;
+}
+
+#left-eye {
+  left: 18%;
+}
+
+#right-eye {
+  right: 20%;
+}
+
+.pupil {
+  width: 38px;
+  height: 38px;
+  background: black;
+  border-radius: 50%;
+  position: absolute;
+  top: 24%; /* Căn giữa dọc */
+  left: 23.5%; /* Căn giữa ngang */
+  transform: translate(-50%, -50%); /* Đưa nó về vị trí chính giữa của mắt */
+  transition: all 0.1s ease; /* Hiệu ứng chuyển động */
+}

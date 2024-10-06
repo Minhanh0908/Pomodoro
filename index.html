@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--phong chu-->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="/style.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4457303488648074"
+      crossorigin="anonymous"
+    ></script>
+
+    <title>Pomodoro Timer</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="card">
+        <div class="card-header">
+          <h1>🍅 Pomodoro Timer</h1>
+          <div class="card-header-buttons">
+            <button
+              id="buttonTypePomodoro"
+              class="active"
+              onclick="setPomodoroType(TIMER_TYPE_POMODORO)"
+            >
+              Pomodoro
+            </button>
+            <button
+              id="buttonTypeShortBreak"
+              onclick="setPomodoroType(TIMER_TYPE_SHORT_BREAK)"
+            >
+              Short Break
+            </button>
+            <button
+              id="buttonTypeLongBreak"
+              onclick="setPomodoroType(TIMER_TYPE_LONG_BREAK)"
+            >
+              Long Break
+            </button>
+          </div>
+
+          <div id="pomodoroCountDisplay"><h3>Pomodoro Sessions: 0</h3></div>
+
+          <div class="card-body">
+            <div id="circularProgressBar" class="progress-bar">
+              <div class="progress-bar-inner">
+                <h2 class="progress-value">25:00</h2>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <button id="startPauseButton" onclick="toggleStartPause()">
+              Start
+            </button>
+
+            <button
+              id="restartButton"
+              style="display: none"
+              onclick="resetTimer()"
+            >
+              <i class="fas fa-redo"></i>
+            </button>
+          </div>
+        </div>
+        <div id="tomato-container">
+          <img id="tomato" src="tomato.png" alt="Tomato" />
+          <div class="eye" id="left-eye">
+            <div class="pupil"></div>
+          </div>
+          <div class="eye" id="right-eye">
+            <div class="pupil"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="settingsModal" class="modal">
+        <div class="modal-content">
+          <div id="modal-header" class="modal-head">
+            <h2>TIMER</h2>
+            <span class="close">&times;</span>
+          </div>
+          <div class="modal-inner">
+            <div class="time-settings">
+              <div class="time-group">
+                <label for="pomodoroTime">Pomodoro</label>
+                <input type="number" id="pomodoroTime" min="1" value="25" />
+              </div>
+              <div class="time-group">
+                <label for="shortBreakTime">Short Break</label>
+                <input type="number" id="shortBreakTime" min="1" value="5" />
+              </div>
+              <div class="time-group">
+                <label for="longBreakTime">Long Break</label>
+                <input type="number" id="longBreakTime" min="1" value="15" />
+              </div>
+            </div>
+            <h3>Set Timer</h3>
+            <div class="input-group">
+              <label for="themeSelect">Select Theme:</label>
+              <select id="themeSelect">
+                <option value="default">Default</option>
+                <option value="green">Green</option>
+                <option value="blue">Blue</option>
+                <option value="orange">Orange</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button id="saveSettingsBtn">Save</button>
+            <button id="defaultSettingsBtn">Default</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-icon" id="openSettingsBtn">
+        <i class="fas fa-cog" style="font-size: 30px; color: white"></i>
+      </div>
+
+      <div id="taskSection">
+        <h2>Task List</h2>
+        <input type="text" id="taskInput" placeholder="Enter a task" />
+        <button id="addTaskButton">Add Task</button>
+        <ul id="taskList"></ul>
+        <button id="deleteAllButton">Delete All</button>
+      </div>
+
+      <script src="script.js"></script>
+    </div>
+  </body>
+</html>
